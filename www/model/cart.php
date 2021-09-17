@@ -89,6 +89,7 @@ function update_cart_amount($db, $cart_id, $amount){
   return execute_query($db, $sql);
 }
 
+//カートidを削除
 function delete_cart($db, $cart_id){
   $sql = "
     DELETE FROM
@@ -129,7 +130,7 @@ function delete_user_carts($db, $user_id){
   execute_query($db, $sql);
 }
 
-
+//カートに入れた数と金額の合計
 function sum_carts($carts){
   $total_price = 0;
   foreach($carts as $cart){

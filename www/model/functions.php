@@ -1,11 +1,13 @@
 <?php
-
+//
 function dd($var){
   var_dump($var);
   exit();
 }
 
+//$urlに移動させる
 function redirect_to($url){
+
   header('Location: ' . $url);
   exit;
 }
@@ -72,10 +74,12 @@ function get_messages(){
   return $messages;
 }
 
+//ユーザーidがあるか
 function is_logined(){
   return get_session('user_id') !== '';
 }
 
+//画像のアップロード
 function get_upload_filename($file){
   if(is_valid_upload_image($file) === false){
     return '';
@@ -103,7 +107,7 @@ function delete_image($filename){
 }
 
 
-
+//文字数を確認
 function is_valid_length($string, $minimum_length, $maximum_length = PHP_INT_MAX){
   $length = mb_strlen($string);
   return ($minimum_length <= $length) && ($length <= $maximum_length);

@@ -16,6 +16,7 @@ function get_db_connect(){
   return $dbh;
 }
 
+//sqlの実行・処理
 function fetch_query($db, $sql, $params = array()){
   try{
     $statement = $db->prepare($sql);

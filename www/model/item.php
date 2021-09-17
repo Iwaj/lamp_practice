@@ -43,10 +43,12 @@ function get_items($db, $is_open = false){
   return fetch_all_query($db, $sql);
 }
 
+//同じget_itemsを引数で切り替えている
 function get_all_items($db){
   return get_items($db);
 }
 
+//同じget_itemsを引数で切り替えている
 function get_open_items($db){
   return get_items($db, true);
 }
@@ -150,6 +152,7 @@ function is_open($item){
   return $item['status'] === 1;
 }
 
+//入力の確認
 function validate_item($name, $price, $stock, $filename, $status){
   $is_valid_item_name = is_valid_item_name($name);
   $is_valid_item_price = is_valid_item_price($price);

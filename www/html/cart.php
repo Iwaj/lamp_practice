@@ -14,8 +14,10 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
+//ユーザーに応じた情報を取得
 $carts = get_user_carts($db, $user['user_id']);
 
+//金額の計算
 $total_price = sum_carts($carts);
 
 include_once VIEW_PATH . 'cart_view.php';
