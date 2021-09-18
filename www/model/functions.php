@@ -117,6 +117,7 @@ function is_alphanumeric($string){
   return is_valid_format($string, REGEXP_ALPHANUMERIC);
 }
 
+//入力した値（$price,$stock）が$stringに代入
 function is_positive_integer($string){
   return is_valid_format($string, REGEXP_POSITIVE_INTEGER);
 }

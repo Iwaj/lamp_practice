@@ -81,7 +81,7 @@ function update_cart_amount($db, $cart_id, $amount){
     UPDATE
       carts
     SET
-      amount = {$amount}
+      amount = :$amount
     WHERE
       cart_id = {$cart_id}
     LIMIT 1
