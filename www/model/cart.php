@@ -21,9 +21,9 @@ function get_user_carts($db, $user_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = ?
   ";
-  return fetch_all_query($db, $sql);
+  return fetch_all_query($db, $sql, [$user_id]);
 }
 
 function get_user_cart($db, $user_id, $item_id){
@@ -45,12 +45,12 @@ function get_user_cart($db, $user_id, $item_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = ?
     AND
-      items.item_id = {$item_id}
+      items.item_id = ?
   ";
 
-  return fetch_query($db, $sql);
+  return fetch_query($db, $sql, [$user_id,$item_id]);
 
 }
 
@@ -70,10 +70,10 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
         user_id,
         amount
       )
-    VALUES({$item_id}, {$user_id}, {$amount})
+    VALUES(?, ?, ?)
   ";
 
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, [$item_id,$user_id,$amount]);
 }
 
 function update_cart_amount($db, $cart_id, $amount){
@@ -81,12 +81,12 @@ function update_cart_amount($db, $cart_id, $amount){
     UPDATE
       carts
     SET
-      amount = {$amount}
+      amount = ?
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, [$amount,$cart_id]);
 }
 
 //カートidを削除
@@ -95,11 +95,11 @@ function delete_cart($db, $cart_id){
     DELETE FROM
       carts
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
 
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, [$cart_id]);
 }
 
 function purchase_carts($db, $carts){
@@ -112,7 +112,7 @@ function purchase_carts($db, $carts){
         $cart['item_id'], 
         $cart['stock'] - $cart['amount']
       ) === false){
-      set_error($cart['name'] . 'の購入に失敗しました。');
+      set_error(h($cart['name']) . 'の購入に失敗しました。');
     }
   }
   
@@ -124,10 +124,10 @@ function delete_user_carts($db, $user_id){
     DELETE FROM
       carts
     WHERE
-      user_id = {$user_id}
+      user_id = ?
   ";
 
-  execute_query($db, $sql);
+  execute_query($db, $sql, [$user_id]);
 }
 
 //カートに入れた数と金額の合計
@@ -146,10 +146,10 @@ function validate_cart_purchase($carts){
   }
   foreach($carts as $cart){
     if(is_open($cart) === false){
-      set_error($cart['name'] . 'は現在購入できません。');
+      set_error(h($cart['name']) . 'は現在購入できません。');
     }
     if($cart['stock'] - $cart['amount'] < 0){
-      set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart['stock']);
+      set_error(h($cart['name']) . 'は在庫が足りません。購入可能数:' . $cart['stock']);
     }
   }
   if(has_error() === true){
