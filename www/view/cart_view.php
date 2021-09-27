@@ -12,7 +12,7 @@
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
-    <?php if(count($carts) > 0 && $_SESSION['csrf_token'] === $_POST['token']){ ?>
+    <?php if(count($carts) > 0 ){ ?>
       <table class="table table-bordered">
         <thead class="thead-light">
           <tr>
