@@ -12,7 +12,7 @@
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
-    <?php if(count($carts) > 0){ ?>
+    <?php if(count($carts) > 0 && $_SESSION['csrf_token'] === $_POST['token']){ ?>
       <table class="table table-bordered">
         <thead class="thead-light">
           <tr>
@@ -24,32 +24,32 @@
             <th>操作</th>
           </tr>
         </thead>
-        <tbody>
-          <?php foreach($carts as $cart){ ?>
-          <tr>
-            <td><img src="<?php print(IMAGE_PATH . $cart['image']);?>" class="item_image"></td>
-            <td><?php print h($cart['name']); ?></td>
-            <td><?php print(number_format($cart['price'])); ?>円</td>
-            <td>
-              <form method="post" action="cart_change_amount.php">
-                <input type="number" name="amount" value="<?php print($cart['amount']); ?>">
-                個
-                <input type="submit" value="変更" class="btn btn-secondary">
-                <input type="hidden" name="cart_id" value="<?php print($cart['cart_id']); ?>">
-              </form>
-            </td>
-            <td><?php print(number_format($cart['price'] * $cart['amount'])); ?>円</td>
-            <td>
+          <tbody>
+            <?php foreach($carts as $cart){ ?>
+            <tr>
+              <td><img src="<?php print(IMAGE_PATH . $cart['image']);?>" class="item_image"></td>
+              <td><?php print h($cart['name']); ?></td>
+              <td><?php print(number_format($cart['price'])); ?>円</td>
+              <td>
+                <form method="post" action="cart_change_amount.php">
+                  <input type="number" name="amount" value="<?php print($cart['amount']); ?>">
+                  個
+                  <input type="submit" value="変更" class="btn btn-secondary">
+                  <input type="hidden" name="cart_id" value="<?php print($cart['cart_id']); ?>">
+                </form>
+              </td>
+              <td><?php print(number_format($cart['price'] * $cart['amount'])); ?>円</td>
+              <td>
 
-              <form method="post" action="cart_delete_cart.php">
-                <input type="submit" value="削除" class="btn btn-danger delete">
-                <input type="hidden" name="cart_id" value="<?php print($cart['cart_id']); ?>">
-              </form>
+                <form method="post" action="cart_delete_cart.php">
+                  <input type="submit" value="削除" class="btn btn-danger delete">
+                  <input type="hidden" name="cart_id" value="<?php print($cart['cart_id']); ?>">
+                </form>
 
-            </td>
-          </tr>
-          <?php } ?>
-        </tbody>
+              </td>
+            </tr>
+            <?php } ?>
+          </tbody>
       </table>
       <p class="text-right">合計金額: <?php print number_format($total_price); ?>円</p>
       <form method="post" action="finish.php">

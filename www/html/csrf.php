@@ -1,3 +1,8 @@
+
+
+<?php 
+var_dump($_SESSION['csrf_token']);
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,6 +13,7 @@
 
 </head>
 <body>
+  
     <h1>csrf体験</h1>
     <p>
     CSRFを体験してみましょう。
