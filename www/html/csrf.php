@@ -1,8 +1,6 @@
 
 
-<?php 
-var_dump($_SESSION['csrf_token']);
-?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
