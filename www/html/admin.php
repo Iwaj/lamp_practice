@@ -6,6 +6,10 @@ require_once MODEL_PATH . 'item.php';
 
 session_start();
 
+
+$token = $_SESSION['csrf_token'];
+
+
 //ユーザーidがなかったらログイン画面に移動
 if(is_logined() === false){
   redirect_to(LOGIN_URL);

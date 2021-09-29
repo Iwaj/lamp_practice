@@ -8,6 +8,9 @@ session_start();
 if(is_logined() === true){
   redirect_to(HOME_URL);
 }
+if (is_valid_csrf_token($_POST['token'])===false){
+  redirect_to(LOGOUT_URL);
+}
 
 $name = get_post('name');
 $password = get_post('password');
